@@ -7,7 +7,8 @@
 		"service_worker": "background.js"
 	},
 	"permissions": [
-		"contextMenus"
+		"contextMenus",
+		"storage"
 	],
 	"action": {
 		"default_icon": {
