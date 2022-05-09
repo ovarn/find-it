@@ -9,7 +9,6 @@ const defaultSearches = {
 
 chrome.runtime.onInstalled.addListener(async (details) => {
 	if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-		let urlMap = {};
 		const syncSearches = await getStorageSyncValue('searches');
 		const searches = syncSearches && Object.keys(syncSearches).length ? syncSearches : defaultSearches;
 
@@ -20,11 +19,9 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 				title: search.title,
 				contexts: ['selection'],
 			});
-
-			urlMap[id] = search.url;
 		}
 
-		chrome.storage.local.set({urlMap});
+		chrome.storage.sync.set({searches});
 	}
 });
 
@@ -33,8 +30,8 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 		return;
 	}
 
-	const urlMap = await getStorageLocalValue('urlMap');
-	const url = urlMap[info.menuItemId];
+	const searches = await getStorageSyncValue('searches');
+	const url = searches[info.menuItemId]?.url;
 
 	if (url) {
 		chrome.tabs.create({
