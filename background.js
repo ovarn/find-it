@@ -8,21 +8,19 @@ const defaultSearches = {
 };
 
 chrome.runtime.onInstalled.addListener(async (details) => {
-	if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-		const syncSearches = await getStorageSyncValue('searches');
-		const searches = syncSearches && Object.keys(syncSearches).length ? syncSearches : defaultSearches;
+	const syncSearches = await getStorageSyncValue('searches');
+	const searches = syncSearches && Object.keys(syncSearches).length ? syncSearches : defaultSearches;
 
-		for (let id in searches) {
-			const search = searches[id];
-			chrome.contextMenus.create({
-				id: id,
-				title: search.title,
-				contexts: ['selection'],
-			});
-		}
-
-		chrome.storage.sync.set({searches});
+	for (let id in searches) {
+		const search = searches[id];
+		chrome.contextMenus.create({
+			id: id,
+			title: search.title,
+			contexts: ['selection'],
+		});
 	}
+
+	chrome.storage.sync.set({searches});
 });
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
