@@ -7,20 +7,12 @@ const defaultSearches = {
 	},
 };
 
-chrome.runtime.onInstalled.addListener(async (details) => {
-	const syncSearches = await getStorageSyncValue('searches');
-	const searches = syncSearches && Object.keys(syncSearches).length ? syncSearches : defaultSearches;
+chrome.runtime.onInstalled.addListener((details) => {
+	createContextMenus();
+});
 
-	for (let id in searches) {
-		const search = searches[id];
-		chrome.contextMenus.create({
-			id: id,
-			title: search.title,
-			contexts: ['selection'],
-		});
-	}
-
-	chrome.storage.sync.set({searches});
+chrome.storage.onChanged.addListener((changes, areaName) => {
+	createContextMenus();
 });
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
@@ -28,8 +20,15 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 		return;
 	}
 
-	const searches = await getStorageSyncValue('searches');
-	const url = searches[info.menuItemId]?.url;
+	let url;
+	const searchId = info.menuItemId;
+	const syncSearches = await getStorageSyncValue('searches');
+
+	if (syncSearches && syncSearches[searchId]) {
+		url = syncSearches[searchId].url;
+	} else if (defaultSearches && defaultSearches[searchId]) {
+		url = defaultSearches[searchId].url;
+	}
 
 	if (url) {
 		chrome.tabs.create({
@@ -55,4 +54,36 @@ async function getStorageValue(key, storageType) {
 			resolve(value[key]);
 		});
 	});
+}
+
+async function removeAllContextMenus() {
+	return new Promise((resolve, reject) => {
+		chrome.contextMenus.removeAll(() => {
+			if (chrome.runtime.lastError) {
+				return reject(chrome.runtime.lastError);
+			}
+			resolve();
+		});
+	});
+}
+
+async function getSearches() {
+	const syncSearches = await getStorageSyncValue('searches');
+	if (syncSearches && Object.keys(syncSearches).length) {
+		return syncSearches;
+	}
+	return defaultSearches;
+}
+
+async function createContextMenus() {
+	await removeAllContextMenus();
+	const searches = await getSearches();
+	for (let id in searches) {
+		const search = searches[id];
+		chrome.contextMenus.create({
+			id: id,
+			title: search.title,
+			contexts: ['selection'],
+		});
+	}
 }
