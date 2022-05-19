@@ -1,11 +1,6 @@
-'use strict';
-
-const defaultSearches = {
-	'duckduckgo': {
-		'title': 'DuckDuckGo: %s',
-		'url' : 'https://duckduckgo.com/?q={0}',
-	},
-};
+import {getSearches} from './js/getSearches.js';
+import {defaultSearches} from './js/defaultSearches.js';
+import {getStorageSyncValue} from './js/getStorageSyncValue.js';
 
 chrome.runtime.onInstalled.addListener((details) => {
 	createContextMenus();
@@ -37,25 +32,6 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 	}
 });
 
-function getStorageSyncValue(key) {
-	return getStorageValue(key, 'sync');
-}
-
-function getStorageLocalValue(key) {
-	return getStorageValue(key, 'local');
-}
-
-async function getStorageValue(key, storageType) {
-	return new Promise((resolve, reject) => {
-		chrome.storage[storageType].get(key, (value) => {
-			if (chrome.runtime.lastError) {
-				return reject(chrome.runtime.lastError);
-			}
-			resolve(value[key]);
-		});
-	});
-}
-
 async function removeAllContextMenus() {
 	return new Promise((resolve, reject) => {
 		chrome.contextMenus.removeAll(() => {
@@ -65,14 +41,6 @@ async function removeAllContextMenus() {
 			resolve();
 		});
 	});
-}
-
-async function getSearches() {
-	const syncSearches = await getStorageSyncValue('searches');
-	if (syncSearches && Object.keys(syncSearches).length) {
-		return syncSearches;
-	}
-	return defaultSearches;
 }
 
 async function createContextMenus() {
