@@ -11,8 +11,11 @@
 		"contextMenus",
 		"storage"
 	],
+	"options_ui": {
+		"page": "options.html",
+		"open_in_tab": true
+	},
 	"action": {
-		"default_popup": "index.html",
 		"default_icon": {
 			"16": "/images/icon16.png",
 			"32": "/images/icon32.png",
