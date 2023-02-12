@@ -1,5 +1,5 @@
-import {defaultSearches} from './defaultSearches.js';
-import {getStorageSyncValue} from './getStorageSyncValue.js';
+import { defaultSearches } from './defaultSearches.js';
+import { getStorageSyncValue } from './getStorageSyncValue.js';
 
 export async function getSearches() {
 	const syncSearches = await getStorageSyncValue('searches');

@@ -1,6 +1,6 @@
-import {defaultSearches} from './js/defaultSearches.js';
-import {getStorageSyncValue} from './js/getStorageSyncValue.js';
-import {createContextMenus} from './js/createContextMenus.js';
+import { defaultSearches } from './js/defaultSearches.js';
+import { getStorageSyncValue } from './js/getStorageSyncValue.js';
+import { createContextMenus } from './js/createContextMenus.js';
 
 chrome.runtime.onInstalled.addListener((details) => {
 	createContextMenus();
@@ -27,7 +27,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
 	if (url) {
 		chrome.tabs.create({
-			url: url.replace('{0}', info.selectionText),
+			url: url.replace('{0}', info.selectionText.replace(/\s/g, '+')),
 		});
 	}
 });

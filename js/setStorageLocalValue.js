@@ -1,4 +1,4 @@
-import {setStorageValue} from './setStorageValue.js';
+import { setStorageValue } from './setStorageValue.js';
 
 export function setStorageLocalValue(key) {
 	return setStorageValue(key, 'local');

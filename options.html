@@ -5,16 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find it!</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <div class="container">
         <form>
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" placeholder="DuckDuckGo %s"> <span>%s will be replaced with the selected text</span>
+            <input type="text" id="title" name="title" placeholder="DuckDuckGo: %s">
+            <span>%s will be replaced with the selected text in the context menu title</span>
             <br><br>
             <label for="url">URL:</label>
-            <input type="text" id="url" name="url" placeholder="https://duckduckgo.com/?q={0}"><br><br>
+            <input type="text" id="url" name="url" placeholder="https://duckduckgo.com/?q={0}">
+            <span>{0} will be replaced with the selected text in the URL</span>
+            <br><br>
             <button data-action="add-row">Add</button>
         </form>
         <table class="styled-table">
@@ -32,6 +35,6 @@
         </table>
         <button data-action="save-changes">Save changes</button>
     </div>
-    <script type="module" src="options.js"></script>
+    <script type="module" src="./options.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
-import {getSearches} from './getSearches.js';
-import {removeAllContextMenus} from './removeAllContextMenus.js';
+import { getSearches } from './getSearches.js';
+import { removeAllContextMenus } from './removeAllContextMenus.js';
 
 export async function createContextMenus() {
 	await removeAllContextMenus();

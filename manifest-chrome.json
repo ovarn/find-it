@@ -4,7 +4,8 @@
 	"version": "1.0.0",
 	"manifest_version": 3,
 	"background": {
-		"page": "background-page.html"
+		"service_worker": "background.js",
+		"type": "module"
 	},
 	"permissions": [
 		"contextMenus",
@@ -28,10 +29,5 @@
 		"32": "/images/icon32.png",
 		"64": "/images/icon64.png",
 		"128": "/images/icon128.png"
-	},
-	"browser_specific_settings": {
-		"gecko": {
-			"id": "barsukox@gmail.com"
-		}
 	}
 }
