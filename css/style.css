@@ -4,16 +4,16 @@
 
 .container {
     margin: auto;
-    width: 50%;
+    min-width: 800px;
+    max-width: 1100px;
 }
 
-table {
-    width: 100%;
+td:nth-child(1) {
+    width: 30%;
 }
 
-td:nth-child(1),
 td:nth-child(2) {
-    width: 35%;
+    width: 40%;
 }
 
 td:nth-child(3),
@@ -53,15 +53,10 @@ input {
     padding: 0.5rem 0.75rem;
 }
 
-.input:focus {
-    border-color: black;
-}
-
 .styled-table {
     border-collapse: collapse;
     margin: 25px 0;
     font-family: sans-serif;
-    min-width: 400px;
     border-radius: 5px 5px 0 0;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     overflow: hidden;
@@ -88,10 +83,6 @@ input {
 
 .styled-table tbody tr:last-of-type {
     border-bottom: 2px solid #009879;
-}
-
-.hidden {
-    display: none;
 }
 
 button:disabled {
