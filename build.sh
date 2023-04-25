@@ -10,11 +10,14 @@ get_version() {
     python3 -c "import json,sys; print(json.load(sys.stdin)['version']);"
 }
 
-if [ -d $BUILDS ] && \
-   [ -f $MANIFEST ] && \
+if [ -f $MANIFEST ] && \
    [ -f $MANIFEST_CHROME ] && \
    [ ! -f $MANIFEST_FIREFOX ]
 then
+    if [ ! -d $BUILDS ]
+    then
+        mkdir $BUILDS
+    fi
     # Build Firefox version.
     FIREFOX_VERSION=$(get_version)
     zip -r -FS $BUILDS/find-it-mozila-$FIREFOX_VERSION.zip * \
