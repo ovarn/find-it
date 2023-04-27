@@ -6,10 +6,12 @@ export async function createContextMenus() {
 	const searches = await getSearches();
 	for (let id in searches) {
 		const search = searches[id];
-		chrome.contextMenus.create({
-			id: id,
-			title: search.title,
-			contexts: ['selection'],
-		});
+		if (!search.disabled) {
+			chrome.contextMenus.create({
+				id: id,
+				title: search.title,
+				contexts: ['selection'],
+			});
+		}
 	}
 }

@@ -19,6 +19,12 @@
 		urlInput.setAttribute('value', search.url);
 		urlTD.appendChild(urlInput);
 
+		const disableTD = document.createElement('td');
+		const disableCheckbox = document.createElement('input');
+		disableCheckbox.setAttribute('type', 'checkbox');
+		disableCheckbox.checked = search.disabled;
+		disableTD.appendChild(disableCheckbox);
+
 		const deleteTD = document.createElement('td');
 		const deleteBtn = document.createElement('button');
 		deleteBtn.dataset.action = 'delete-row';
@@ -37,7 +43,7 @@
 		moveDownBtn.textContent = 'Move down';
 		moveDownTD.append(moveDownBtn);
 
-		row.append(titleTD, urlTD, deleteTD, moveUpTD, moveDownTD);
+		row.append(titleTD, urlTD, disableTD, deleteTD, moveUpTD, moveDownTD);
 		return row;
 	}
 
@@ -133,7 +139,8 @@
 				const id = index;
 				const title = row.children[0].children[0].value;
 				const url = row.children[1].children[0].value;
-				return { id, title, url };
+				const disabled = row.children[2].children[0].checked;
+				return { id, title, url, disabled };
 			});
 		}
 		return [];

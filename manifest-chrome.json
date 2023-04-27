@@ -1,7 +1,7 @@
 {
 	"name": "Find it!",
 	"description": "Handy context menu search.",
-	"version": "1.0.4",
+	"version": "1.1.0",
 	"manifest_version": 3,
 	"background": {
 		"service_worker": "background.js",
