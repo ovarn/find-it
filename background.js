@@ -2,6 +2,9 @@ import { defaultSearches } from './js/defaultSearches.js';
 import { getStorageSyncValue } from './js/getStorageSyncValue.js';
 import { createContextMenus } from './js/createContextMenus.js';
 
+// Recreate the context menus when the service worker starts.
+createContextMenus();
+
 chrome.runtime.onInstalled.addListener((details) => {
 	createContextMenus();
 });
